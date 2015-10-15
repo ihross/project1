@@ -1,0 +1,28 @@
+body {
+	background-image: url('http://i.imgur.com/hxecFn2.jpg');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	text-align: center;
+}
+
+header {
+	background-color: #208020;
+	margin-top: 5px;
+}
+
+.start-game {
+	text-align: center;
+}
+
+footer {
+	background-color: #208020;
+	display: inline;
+	padding-left: 4px;
+	padding-right: 4px;
+	opacity: 0.35;
+	position: absolute;
+	bottom: 15px;
+	right: 45%;
+	margin-bottom: 2px;
+}
