@@ -11,8 +11,20 @@ header {
 	margin-top: 5px;
 }
 
-.start-game {
+#start-game {
 	text-align: center;
+}
+
+.buttons {
+	text-align: center;
+	display: inline;
+	position: absolute;
+	bottom: 100px;
+	right: 48%;
+}
+
+#bankroll {
+	
 }
 
 footer {
