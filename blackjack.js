@@ -19,10 +19,65 @@ var initialBet = 0;
 // The amount the player is betting
 var betAmount = 0;
 
-// An empty array for a new deck
+// The deck array is a collection of appropriate objects
+var deck = [
+
+	cardTwo = {
+	name: "Two",	
+	value: 2,
+	},				
+	cardThree = {
+	name: "Three",	
+	value: 3,
+	},
+	cardFour = {
+	name: "Four",	
+	value: 4,
+	},		
+	cardFive = {
+	name: "Five",
+	value: 5,
+	},
+	cardSix = {
+	name: "Six",
+	value: 6,
+	},
+	cardSeven = {
+	name: "Seven",
+	value: 7,
+	},	
+	cardEight = {
+	name: "Eight",	
+	value: 8,
+	},		
+	cardNine = {
+	name: "Nine",	
+	value: 9,
+	},
+	cardTen = {
+	name: "Ten",
+	value: 10,
+	},
+	cardJack = {
+	name: "Jack",	
+	value: 10,
+	},	
+	cardQueen = {
+	name: "Queen",	
+	value: 10,
+	},
+	cardKing = {
+	name: "King",
+	value: 10,
+	},
+	cardAce = {
+	name: "Ace",
+	value: 11,
+	}	
+];
+console.log(deck);
+
 var newDeck = [];
-
-
 
 ////////////////////////////
 //////////Buttons///////////
@@ -98,61 +153,26 @@ getBetAmount.appendChild(betAmountDisplay);
 // Random number generator function
 var randomFunction = function(max) {
 	var randomNumber = Math.floor(Math.random() * max);
-	//console.log(randomNumber);
 	return randomNumber;
 }
+// randomFunction(52);
 
+// The function that shuffles the order of cards that are in in the deck
+var shuffle = function(cards){
+    for(var j, x, i = cards.length; i; j = parseInt(Math.random() * i), x = cards[--i], cards[i] = cards[j], cards[j] = x);
+    // console.log(cards);
+};
+shuffle(deck);
 
-// var makeDeck = function(decks) {
-//   var ranks = new Array("Ace", "2", "3", "4", "5", "6", "7", "8", "9",
-//                         "10", "Jack", "Queen", "King");
-//   var suits = new Array("Clubs", "Diamonds", "Hearts", "Spades");
-//   var i; 
-//   var x; 
-//   var y;
-//   var fullCards;
-
-//   fullCards = ranks.length * suits.length;
-
-//   // Set array of the actual cards' values
-//   this.cards = new Array(decks * fullCards);
-
-//   // Fill the array with the pack of cards
-//   for (i = 0; i < decks; i++) {
-//     for (x = 0; x < suits.length; x++) {
-//       for (y = 0; y < ranks.length; y++) {
-//         this.cards[i * fullCards + x * ranks.length + y] = new Card(ranks[y], suits[x]);
-//       }
-//     }
-//   }
-// }
-// makeDeck();
-
-
-// The function start of the game 
+// The function to start of the game 
 var startOfGame = function() {
 	makeStart.onclick = function() {
 		// console.log("Game starts!");
+
 	}
 }
 startOfGame();
 
-var makeDeck = function() {
-	var ranks = new Array("Ace", "2", "3", "4", "5", "6", "7", "8", "9",
-                  			"10", "Jack", "Queen", "King");
-	var suits = new Array("Clubs", "Diamonds", "Hearts", "Spades");
-
-	var allCards = ranks.length * suits.length;
-}
-
-
-// The shuffle function
-var shuffleFunction = function() {
-	makeShuffle.onclick = function() {
-		// console.log("Shuffling!");
-
-	}
-}
 
 // The function that allows the player to place his bet
 var placeBet = function() {
@@ -203,6 +223,47 @@ var endGame = function() {
 ///////////////////////////////////////////////
 ///////Graveyard of Failed Attempts////////////
 ///////////////////////////////////////////////
+
+
+// The function to make an actual playable deck
+// var makeDeck = function() {
+// 	var ranks = new Array("Ace", "2", "3", "4", "5", "6", "7", "8", "9",
+//                   			"10", "Jack", "Queen", "King");
+// 	var suits = new Array("Clubs", "Diamonds", "Hearts", "Spades");
+// 	var allCards = ranks.length * suits.length;
+// 	// console.log(allCards);
+// 	deck.push(allCards);
+// 	// console.log(newDeck);
+// }
+// makeDeck();
+
+
+// The shuffle function
+// var shuffleFunction = function() {
+// 	makeShuffle.onclick = function() {
+// 		// console.log("Shuffling!");
+
+
+// var makeDeck = function(decks) {
+//   var ranks = new Array("Ace", "2", "3", "4", "5", "6", "7", "8", "9",
+//                         "10", "Jack", "Queen", "King");
+//   var suits = new Array("Clubs", "Diamonds", "Hearts", "Spades");
+//   var i; 
+//   var x; 
+//   var y;
+//   var fullCards;
+//   fullCards = ranks.length * suits.length;
+//   // Set array of the actual cards' values
+//   this.cards = new Array(decks * fullCards);
+//   // Fill the array with the pack of cards
+//   for (i = 0; i < decks; i++) {
+//     for (x = 0; x < suits.length; x++) {
+//       for (y = 0; y < ranks.length; y++) {
+//         this.cards[i * fullCards + x * ranks.length + y] = new Card(ranks[y], suits[x]);
+//       }
+//     }
+//   }
+// }
 
 
 // var getScore = function() {
