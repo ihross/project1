@@ -10,6 +10,13 @@ var dealerArray = [];
 // Player starts blank
 var playerArray = [];
 
+// The variables of the player/dealer opening cards
+var playerCardOne;
+var playerCardTwo;
+var dealerCardOne;
+var dealerCardTwo;
+
+
 // For now, the bankroll starts at a default of 5 to get the MVP working
 var bankroll =  10;
 
@@ -19,63 +26,65 @@ var initialBet = 0;
 // The amount the player is betting
 var betAmount = 0;
 
-// The deck array is a collection of appropriate objects
+// The deck array is a collection of 13 appropriate objects
 var deck = [
 
 	cardTwo = {
-	name: "Two",	
-	value: 2,
+	name : "Two",	
+	value : 2,
 	},				
 	cardThree = {
-	name: "Three",	
-	value: 3,
+	name : "Three",	
+	value : 3,
 	},
 	cardFour = {
-	name: "Four",	
-	value: 4,
+	name : "Four",	
+	value : 4,
 	},		
 	cardFive = {
-	name: "Five",
-	value: 5,
+	name : "Five",
+	value : 5,
 	},
 	cardSix = {
-	name: "Six",
-	value: 6,
+	name : "Six",
+	value : 6,
 	},
 	cardSeven = {
-	name: "Seven",
-	value: 7,
+	name : "Seven",
+	value : 7,
 	},	
 	cardEight = {
-	name: "Eight",	
-	value: 8,
+	name : "Eight",	
+	value : 8,
 	},		
 	cardNine = {
-	name: "Nine",	
-	value: 9,
+	name : "Nine",	
+	value : 9,
 	},
 	cardTen = {
-	name: "Ten",
-	value: 10,
+	name : "Ten",
+	value : 10,
 	},
 	cardJack = {
-	name: "Jack",	
-	value: 10,
+	name : "Jack",	
+	value : 10,
 	},	
 	cardQueen = {
-	name: "Queen",	
-	value: 10,
+	name : "Queen",	
+	value : 10,
 	},
 	cardKing = {
-	name: "King",
-	value: 10,
+	name : "King",
+	value : 10,
 	},
 	cardAce = {
 	name: "Ace",
-	value: 11,
+	value : 11,
 	}	
 ];
-console.log(deck);
+// console.log(deck);
+
+var suitsArray = ["hearts", "diamonds", "clubs", "spades"];
 
 var newDeck = [];
 
@@ -124,13 +133,13 @@ makeBet.innerHTML = "Place Bet";
 var getDealer = document.getElementById('dealer');
 var dealerArea = document.createElement('p');
 getDealer.appendChild(dealerArea);
-dealerArea.innerHTML = dealerArray;
+// dealerArea.innerHTML = dealerArray;
 
 // Appending the playerArray to the document
 var getPlayer = document.getElementById('player');
 var playerArea = document.createElement('p');
 getPlayer.appendChild(playerArea);
-playerArea.innerHTML = playerArray;
+// playerArea.innerHTML = playerArray;
 
 // Appending the bankroll to the document
 var getBankroll = document.getElementById('bankroll');
@@ -140,7 +149,7 @@ bankrollDisplay.innerHTML = "Bankroll: " + "$" + bankroll;
 
 // Appending the betAmount to the document
 var getBetAmount = document.getElementById('bet-amount');
-var betAmountDisplay= document.createElement('p');
+var betAmountDisplay = document.createElement('p');
 getBetAmount.appendChild(betAmountDisplay);
 
 
@@ -158,20 +167,41 @@ var randomFunction = function(max) {
 // randomFunction(52);
 
 // The function that shuffles the order of cards that are in in the deck
-var shuffle = function(cards){
+var shuffle = function(cards) {
     for(var j, x, i = cards.length; i; j = parseInt(Math.random() * i), x = cards[--i], cards[i] = cards[j], cards[j] = x);
     // console.log(cards);
 };
 shuffle(deck);
 
 // The function to start of the game 
-var startOfGame = function() {
+var startOfGame = function(deck) {
 	makeStart.onclick = function() {
 		// console.log("Game starts!");
+      var playerCardOne = deck.pop()
+      	// console.log(playerCardOne);
+      var playerCardTwo = deck.pop();
+      // console.log(playerCardTwo);
+      var dealerCardOne = deck.pop();	
+      // console.log(dealerCardOne);
+      var dealerCardTwo = deck.pop();	
+      // console.log(dealerCardTwo);
+
+			dealerArray.push(dealerCardOne.name, dealerCardOne.value, dealerCardTwo.name, dealerCardTwo.value);
+
+      playerArray.push(playerCardOne.name, playerCardOne.value, playerCardTwo.name, playerCardTwo.value);
+
+      dealerArea.innerHTML = dealerArray;
+
+      playerArea.innerHTML = playerArray;
+
 
 	}
 }
-startOfGame();
+
+
+
+startOfGame(deck);
+
 
 
 // The function that allows the player to place his bet
@@ -221,9 +251,13 @@ var endGame = function() {
 
 
 ///////////////////////////////////////////////
-///////Graveyard of Failed Attempts////////////
+/////////Graveyard of Failed Attempts//////////
 ///////////////////////////////////////////////
 
+
+ // for (i = 0; i < deck.length; i++) {
+	// 	var card = deck[i].name.value;
+	// };
 
 // The function to make an actual playable deck
 // var makeDeck = function() {
