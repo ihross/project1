@@ -6,31 +6,16 @@
 // A way for players to get more cards, or declare themselves happy with their current hand
 // A way for players to bust
 // A way for players to win or tie
-// Game logic for the dealer to hit until a certain point
-
-console.log('Works!');
-
 
 ////////////////////////////
 //////Global Variables//////
 ////////////////////////////
 
-// Dealer array starts blank
-var dealerArray = [];
-// Player starts blank
-var playerArray = [];
 
-// The variables of the player/dealer opening cards
-var playerCardOne;
-var playerCardTwo;
-var dealerCardOne;
-var dealerCardTwo;
+var dealerCards = [];
+var playerCards = [];
 
-
-
-
-
-// For now, the bankroll starts at a default of 5 to get the MVP working
+// For now, the bankroll starts at a default of 10 to get the MVP working
 var bankroll =  10;
 
 // The amount at the start of each deal, which is defaulting at 1 for the MVP
@@ -39,10 +24,10 @@ var initialBet = 0;
 // The amount the player is betting
 var betAmount = 0;
 
-// The deck array is a collection of 13 appropriate objects
+// The deck array is kept empty so as to push in the cardTypes and the 4 suits (from the suitArray) together.
 var deck = [];
-// console.log(deck);
 
+// The 13 different card types in a deck with 2 key/value pairs, before the suit is added on.
 var cardTypes = [
 	cardTwo = {
 	name : "Two",	
@@ -97,9 +82,19 @@ var cardTypes = [
 	value : 11,
 	}	
 ];
-var suitsArray = ["hearts", "diamonds", "clubs", "spades"];
 
-(function generateDeck() {
+// The array of suits to be added to the cardTypes and put into the (currently) empty "deck" array.
+var suitsArray = ["Hearts", "Diamonds", "Clubs", "Spades"];
+
+
+
+////////////////////////////
+///////More Functions///////
+////////////////////////////
+
+// A function called immediately that generates a deck combining the cardTypes with the suits.
+// It requires multiple for loops and my first use of JSON (JavaScript Object Notation).
+var generateDeck = function() {
 	for(var s in suitsArray) {
 		var suit = suitsArray[s];
 		for(var t in cardTypes) {
@@ -109,98 +104,10 @@ var suitsArray = ["hearts", "diamonds", "clubs", "spades"];
 			deck.push(card);
 		}
 	}
-})();
-
-
-var newDeck = [];
-
-////////////////////////////
-//////////Buttons///////////
-////////////////////////////
-
-// The variable 'getStart' accesses the start-button ID
-var getStart = document.getElementById('start-button');
-var makeStart = document.createElement('button');
-getStart.appendChild(makeStart);
-makeStart.innerHTML = "Start Game";
-// console.log(getStart);
-
-// The button that shuffles the deck
-var shuffleButton = document.getElementById('shuffle');
-var makeShuffle = document.createElement('button');
-shuffleButton.appendChild(makeShuffle);
-makeShuffle.innerHTML = "Shuffle";
-
-// The button where the player asks "Hit Me!"
-var hitMeButton = document.getElementById('hit-me');
-var makeHitMe = document.createElement('button');
-hitMeButton.appendChild(makeHitMe);
-makeHitMe.innerHTML = "Hit Me!"; 
-
-// The button that causes the player to stand
-var standButton = document.getElementById('stand');
-var makeStand = document.createElement('button');
-standButton.appendChild(makeStand);
-makeStand.innerHTML = "Stand"; 
-
-// The button that places the intial bet
-var betButton = document.getElementById('place-bet');
-var makeBet = document.createElement('button');
-betButton.appendChild(makeBet);
-makeBet.innerHTML = "Place Bet"; 
-
-
-////////////////////////////
-//////Appending Areas///////
-////////////////////////////
-
-
-// Appending the dealerArray to the document
-var getDealer = document.getElementById('dealer');
-var dealerArea = document.createElement('p');
-getDealer.appendChild(dealerArea);
-// dealerArea.innerHTML = dealerArray;
-
-// Appending the playerArray to the document
-var getPlayer = document.getElementById('player');
-var playerArea = document.createElement('p');
-getPlayer.appendChild(playerArea);
-// playerArea.innerHTML = playerArray;
-
-// Appending the bankroll to the document
-var getBankroll = document.getElementById('bankroll');
-var bankrollDisplay= document.createElement('p');
-getBankroll.appendChild(bankrollDisplay);
-// bankrollDisplay.innerHTML = "Bankroll: " + "$" + bankroll;
-
-// Appending the betAmount to the document
-var getBetAmount = document.getElementById('bet-amount');
-var betAmountDisplay = document.createElement('p');
-getBetAmount.appendChild(betAmountDisplay);
-
-
-
-////////////////////////////
-/////////Functions//////////
-////////////////////////////
-
-
-// Random number generator function
-var randomFunction = function(max) {
-	var randomNumber = Math.floor(Math.random() * max);
-	return randomNumber;
 }
-// randomFunction(52);
-
-// The function that shuffles the order of cards that are in in the deck
-var shuffle = function(cards) {
-    for(var j, x, i = cards.length; i; j = parseInt(Math.random() * i), x = cards[--i], cards[i] = cards[j], cards[j] = x);
-    // console.log(cards);
-};
-shuffle(deck);
 
 var assignSuitPlayer = function() {
-	for(var x = 0; x < playerArray.length; x++) {
+	for(var x = 0; x < playerCards.length; x++) {
 		var randomSuit = randomFunction(4);
 		player[x].suit = suitsArray[randomSuit];
 	}
@@ -209,42 +116,35 @@ var assignSuitPlayer = function() {
 var dealerCards = [];
 var playerCards = [];
 
-// The function to start of the game 
-var startOfGame = function(deck) {
-	makeStart.onclick = function() {
-			shuffle(deck);
-      playerCards.push(deck.pop());
-      dealerCards.push(deck.pop());
-      playerCards.push(deck.pop());
-      dealerCards.push(deck.pop());
-
-      showOneDealerCard();
-	}
-}
-
+// This is the function that attaches the created/shuffled cards to the DOM and displays their keys/values.
+// It also is responsible for one of the dealer's cards being hidden.
 var renderCards = function() {
+    var card;
 	var html = '<ul>';
 	for(var c in playerCards) {
-		var card = playerCards[c];
-		html += '<li>'+card.name+'<sub>'+card.suit+'</sub>'+'<sup>'+card.value+'</sup>'+'</li>';
+		card = playerCards[c];
+		html += '<li>'+card.name+' of '+card.suit+'<sup>'+card.value+'</sup>'+'</li>';
 	}
 	html += '</ul>';
-	playerArea.innerHTML = html;
+	
+	document.getElementById('player').innerHtml = html;
 
-	var html = '<ul>';
-	for(var c in dealerCards) {
-		var card = dealerCards[c];
+	html = '<ul>';
+	for(c in dealerCards) {
+		card = dealerCards[c];
 		if(card.visible) {
-			html += '<li>'+card.name+'<sub>'+card.suit+'</sub>'+'<sup>'+card.value+'</sup>'+'</li>';
+			html += '<li>'+card.name+' of '+card.suit+'<sup>'+card.value+'</sup>'+'</li>';
 			continue;
 		}
 
-		html += '<li>*<sub>?</sub><sup>#</sup>'+'</li>';
+		html += '<li>?</li>';
 	}
 	html += '</ul>';
-	dealerArea.innerHTML = html;
+	
+	document.getElementById('dealer').innerHtml = html;
 }
 
+// This function is used to show the hidden card in the dealer's hand after the player hits "stand".
 var showOneDealerCard = function() {
 	for(var c in dealerCards) {
 		var card = dealerCards[c];
@@ -260,44 +160,77 @@ var showOneDealerCard = function() {
 	renderCards();
 }
 
-startOfGame(deck);
 
-hitMeButton.onclick = function() {
+
+// The function that shuffles the order of cards that are in in the deck
+// Requires the "deck" to be put in as the argument, while "cards" is written as a filler for the parameter
+var shuffle = function(cards) {
+    for(var i = 0; i < deck.length - 1; i++) {
+        var randomIndex = Math.floor(Math.random() * (deck.length - i) + i);
+        
+        // swap this index with a random index, between this and 51
+        var temp = deck[i];
+        deck[i] = deck[randomIndex];
+        deck[randomIndex] = temp;
+    }
+};
+
+// The function to start of the game 
+var start = function() {
+    generateDeck();
+    shuffle();
+
+    playerCards.push(deck.pop());
+    dealerCards.push(deck.pop());
+    playerCards.push(deck.pop());
+    dealerCards.push(deck.pop());
+    
+    showOneDealerCard();
+}
+
+// The hitMeButton will take another card from the deck array and use previously declared functions
+// to display that extra card on the screen.
+var hitMe = function() {
 	shuffle(deck);
 	playerCards.push(deck.pop());
 	renderCards();
 }
 
-standButton.onclick = function() {
+// This button activates the showOneDealerCard function and causes the player's turn to end.
+var stand = function() {
 	showOneDealerCard();
 }
 
 
-// The function that allows the player to place his bet
+// The function that allows the player to place his bet. Currently the display is just aesthetic and doesn't affect the game itself.
 var placeBet = function() {
-	makeBet.onclick = function() {
+/*	makeBet.onclick = function() {
 		// console.log("Placing bet!");
 		bankrollDisplay.innerHTML = "Bankroll: " + "$" +  (bankroll -= 1);
 		betAmountDisplay.innerHTML = "Bet amount: " + "$" +  (betAmount += 1);
-	}
+	}*/
 }
 placeBet();
 
 
-// // The initial deal for the computer 
-// var initialComputerDeal = function() {
 
-// }
+////////////////////////////
+//////////Buttons///////////
+////////////////////////////
 
-// // The initial deal for the player 
-// var initialPlayerDeal = function() {
+// Bind functions to button click events.
+document.getElementById('start').onclick = start;
+document.getElementById('shuffle').onclick = shuffle;
+document.getElementById('hit-me').onclick = hitMe;
+document.getElementById('stand').onclick = stand;
+document.getElementById('place-bet').onclick = placeBet;
 
-// }
 
-// // The player's move/choices at each turn
-// var playerMove = function() {
 
-// }
+
+
+
+
 
 // // The computers automated move that occurs after the player's
 // var computerMove = function() {
@@ -323,6 +256,16 @@ placeBet();
 /////////Graveyard of Failed Attempts//////////
 ///////////////////////////////////////////////
 
+
+// // The initial deal for the computer 
+// var initialComputerDeal = function() {
+// }
+// // The initial deal for the player 
+// var initialPlayerDeal = function() {
+// }
+// // The player's move/choices at each turn
+// var playerMove = function() {
+// }
 
  // for (i = 0; i < deck.length; i++) {
 	// 	var card = deck[i].name.value;
