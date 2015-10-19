@@ -2,7 +2,7 @@
 WDI First Project - Blackjack
 http://ihross.github.io/project1/
 
-1. PROCESS
+--PROCESS
 
 My first task in tackling this project was to try and setup a good skeleton in the HTML, and then to
 loosely style it with CSS to give it a rough shape. However, as the project progressed I went through a bunch of 
@@ -28,7 +28,7 @@ Lastly, I worked hard with a combination of online resources and some guessing a
 should work. I didn't quite nail them down perfectly, but there's the distinct outline of an MVP, which was really 
 my ultimate goal.
 
-2. Struggles
+--Struggles
 
 I struggled and faced problems at almost every step of the way, and there were a few I was not able to overcome in 
 the allotted time for this assignment. The two most glaring holes in my MVP is the fact that the betting system was 
@@ -41,7 +41,7 @@ At least 50% of the issues I got really stuck on were probably either A. Syntact
 Problems with scope. While I know these will always arise, I'd like to think with time and experience I will 
 encounter fewer of these -- or at least not spend so long scratching my head in confusion over them.
 
-3. Conclusion
+--Conclusion
 
 Overall this was a much more challenging exercise than I originally anticipated, but I feel I learned a lot, with 
 far more still to learn about just making this game alone. I truly feel one could spend many weeks just polishing 
