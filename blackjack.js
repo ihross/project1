@@ -7,6 +7,8 @@
 // A way for players to bust
 // A way for players to win or tie
 
+console.log("works!");
+
 ////////////////////////////
 //////Global Variables//////
 ////////////////////////////
@@ -86,7 +88,7 @@ var suitsArray = ["Hearts", "Diamonds", "Clubs", "Spades"];
 
 
 ////////////////////////////
-///////More Functions///////
+/////////Functions//////////
 ////////////////////////////
 
 // A function called immediately that generates a deck combining the cardTypes with the suits.
